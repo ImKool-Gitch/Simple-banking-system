@@ -27,7 +27,12 @@ public:
 
 int main() {
     BankAccount b1;
-    b1.init();
+    if (b1.init()==exit_b) {
+        cout << "An error was encountered !, restarting system until success:\n";
+        do {
+            b1.init();
+        }while(b1.init==exit_b);
+    };
     int vv;
     int amount_d;
     int amount_w;
