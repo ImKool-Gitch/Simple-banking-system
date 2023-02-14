@@ -31,7 +31,7 @@ int main() {
         cout << "An error was encountered !, restarting system until success:\n";
         do {
             b1.init();
-        }while(b1.init==exit_b);
+        }while(b1.init()==exit_b);
     };
     int vv;
     int amount_d;
