@@ -55,7 +55,7 @@ int main() {
             cout << "Enter amount to withdraw:... ";
             cin >> amount_w;
             if (b1.withdraw(amount_w)==exit_b)
-                cout << "Error, Cannot withdraw more than account balance !" << endl;
+                cout << "Error, The requested amount was either higher than the balance or it was a negative value" << endl;
             amount_w = 0;
             b1.logs++;
             break;
