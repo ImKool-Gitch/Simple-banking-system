@@ -3,23 +3,23 @@
 using namespace std;
 
 enum Option {
-    d = 1,
-    w = 2,
-    b = 3,
-    q = 4
+    deposit = 1,
+    withdraw = 2,
+    balance = 3,
+    quit = 4
 };
 
 enum ERR {exit_g = 24, exit_b = 25};
 
 class BankAccount {
 private:
-    char f_name[10];
-    char l_name[10];
-    int a_num;
-    int b_b;
+    string f_name;
+    string l_name;
+    long a_num;
+    long b_b;
 public:
+    BankAccount();
     int logs;
-    ERR init();
     void deposit(int n);
     ERR withdraw(int n);
     void balance();
@@ -27,47 +27,40 @@ public:
 
 int main() {
     BankAccount b1;
-    if (b1.init()==exit_b) {
-        cout << "An error was encountered !, restarting system !\n";
-        int ret_v;
-        do {
-            ret_v = b1.init();
-        }while(ret_v==exit_b);
-    };
     int vv;
-    int amount_d;
-    int amount_w;
-    int quit = 0;
+    long amount_d;
+    long amount_w;
+    int quit_s = 0;
     while(1) {
         cout << "Enter any option from the menu below: \n";
         cout << "(1): Deposit money\n(2): Withdraw money\n(3): Check balance\n(4): Quit\n:... ";
         cin >> vv;
         cout << "--------------------" << endl;
         switch (vv) {
-        case d:
+        case deposit:
                 cout << "Enter amount to deposit:... ";
                 cin >> amount_d;
                 b1.deposit(amount_d);
                 amount_d = 0;
                 break;
-        case w:
+        case withdraw:
             cout << "Enter amount to withdraw:... ";
             cin >> amount_w;
             if (b1.withdraw(amount_w)==exit_b)
                 cout << "Error, The requested amount was either higher than the balance or it was a negative value" << endl;
             amount_w = 0;
             break;
-        case b:
+        case balance:
             b1.balance();
             break;
-        case q:
+        case quit:
             cout << "Exiting system...." << endl;
-            quit = 1;
+            quit_s = 1;
             break;
         default:
             cout << "Invalid option !" << endl;
         }
-        if (quit==1)
+        if (quit_s==1)
             break;
         cout << "--------------------" << endl;
         b1.logs++;
@@ -75,7 +68,7 @@ int main() {
     return 0;
 }
 
-ERR BankAccount::init() {
+BankAccount::BankAccount() {
     logs = 0;
     cout << "Welcome to Bank 2.0, Enter info: \n";
     cout << "Enter first name:... ";
@@ -84,13 +77,22 @@ ERR BankAccount::init() {
     cin >> l_name;
     cout << "Enter account number (must be less than 8 digits):... ";
     cin >> a_num;
-    if (a_num>99999999)
-        return exit_b;
+    if (a_num>99999999) {
+        cout << "The account number was entered incorrectly !" << endl;
+        do {
+            cout << "Enter account number (must be less than 8 digits):... ";
+            cin >> a_num;
+        }while(a_num>999999999||a_num<0);
+    }
     cout << "Enter starting balance (must be less than 1000):... ";
     cin >> b_b;
-    if (b_b>1000)
-        return exit_b;
-    return exit_g;
+    if (b_b>1000||b_b<0) {
+        cout << "The starting balance was higher than 1000 or the value was negative" << endl;
+        do {
+            cout << "Enter starting balance (must be less than 1000):... ";
+            cin >> b_b;
+        }while(b_b>1000||b_b<0);
+    }
 }
 
 void BankAccount::deposit(int n) {
