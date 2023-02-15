@@ -49,7 +49,6 @@ int main() {
                 cin >> amount_d;
                 b1.deposit(amount_d);
                 amount_d = 0;
-                b1.logs++;
                 break;
         case w:
             cout << "Enter amount to withdraw:... ";
@@ -57,11 +56,9 @@ int main() {
             if (b1.withdraw(amount_w)==exit_b)
                 cout << "Error, The requested amount was either higher than the balance or it was a negative value" << endl;
             amount_w = 0;
-            b1.logs++;
             break;
         case b:
             b1.balance();
-            b1.logs++;
             break;
         case q:
             cout << "Exiting system...." << endl;
@@ -73,6 +70,7 @@ int main() {
         if (quit==1)
             break;
         cout << "--------------------" << endl;
+        b1.logs++;
     }
     return 0;
 }
