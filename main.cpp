@@ -28,7 +28,7 @@ public:
 int main() {
     BankAccount b1;
     if (b1.init()==exit_b) {
-        cout << "An error was encountered !, restarting system until success:\n";
+        cout << "An error was encountered !, restarting system !\n";
         int ret_v;
         do {
             ret_v = b1.init();
@@ -37,30 +37,43 @@ int main() {
     int vv;
     int amount_d;
     int amount_w;
-    do {
+    int quit = 0;
+    while(1) {
         cout << "Enter any option from the menu below: \n";
         cout << "(1): Deposit money\n(2): Withdraw money\n(3): Check balance\n(4): Quit\n:... ";
         cin >> vv;
-        if (vv==d) {
+        cout << "--------------------" << endl;
+        switch (vv) {
+        case d:
                 cout << "Enter amount to deposit:... ";
                 cin >> amount_d;
                 b1.deposit(amount_d);
                 amount_d = 0;
                 b1.logs++;
-        }
-        if (vv==w) {
+                break;
+        case w:
             cout << "Enter amount to withdraw:... ";
             cin >> amount_w;
             if (b1.withdraw(amount_w)==exit_b)
                 cout << "Error, Cannot withdraw more than account balance !" << endl;
             amount_w = 0;
             b1.logs++;
-        }
-        if (vv==b) {
+            break;
+        case b:
             b1.balance();
             b1.logs++;
+            break;
+        case q:
+            cout << "Exiting system...." << endl;
+            quit = 1;
+            break;
+        default:
+            cout << "Invalid option !" << endl;
         }
-    }while(vv!=q);
+        if (quit==1)
+            break;
+        cout << "--------------------" << endl;
+    }
     return 0;
 }
 
@@ -87,7 +100,7 @@ void BankAccount::deposit(int n) {
 }
 
 ERR BankAccount::withdraw(int n) {
-    if (n>b_b)
+    if (n>b_b||n<0)
         return exit_b;
     b_b -= n;
     return exit_g;
@@ -97,6 +110,6 @@ void BankAccount::balance() {
     cout << "The acount has the following info: " << endl;
     cout << "Name: " << f_name << " " << l_name << endl;
     cout << "Account number: " << a_num << endl;
-    cout << "Balance: " << b_b << endl;
+    cout << "Balance: " << b_b << '$' << endl;
     cout << "Logs: " << logs << endl;
 }
