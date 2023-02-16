@@ -9,7 +9,11 @@ enum Option {
     quit = 4
 };
 
-enum ERR {exit_g = 24, exit_b = 25};
+enum ERR {
+    higher_than_balance,
+    negative_value,
+    good
+};
 
 class BankAccount {
 private:
@@ -20,7 +24,7 @@ private:
 public:
     BankAccount();
     int logs;
-    void deposit(int n);
+    ERR deposit(int n);
     ERR withdraw(int n);
     void balance();
 };
@@ -40,14 +44,17 @@ int main() {
         case deposit:
                 cout << "Enter amount to deposit:... ";
                 cin >> amount_d;
-                b1.deposit(amount_d);
+                if (b1.deopsit(amount_d)==negative_value)
+                    cout << "Error, Cannot deposit a negative value !" << endl;
                 amount_d = 0;
                 break;
         case withdraw:
             cout << "Enter amount to withdraw:... ";
             cin >> amount_w;
-            if (b1.withdraw(amount_w)==exit_b)
-                cout << "Error, The requested amount was either higher than the balance or it was a negative value" << endl;
+            if (b1.withdraw(amount_w)==higher_than_balance)
+                cout << "Error, The requested amount was higher than the current balance !" << endl;
+            else if (b1.withdraw(amount_w)==negative_value)
+                cout << "Error, The requested amount was a negative value !" << endl;
             amount_w = 0;
             break;
         case balance:
@@ -95,15 +102,20 @@ BankAccount::BankAccount() {
     }
 }
 
-void BankAccount::deposit(int n) {
+ERR BankAccount::deposit(int n) {
+    if (n<0)
+        return negative_value;
     b_b += n;
+    return good;
 }
 
 ERR BankAccount::withdraw(int n) {
-    if (n>b_b||n<0)
-        return exit_b;
+    if (n>b_b)
+        return higher_than_balance;
+    else if (n<0)
+        return negative_value;
     b_b -= n;
-    return exit_g;
+    return good;
 }
 
 void BankAccount::balance() {
