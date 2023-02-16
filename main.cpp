@@ -44,7 +44,7 @@ int main() {
         case deposit:
                 cout << "Enter amount to deposit:... ";
                 cin >> amount_d;
-                if (b1.deopsit(amount_d)==negative_value)
+                if (b1.deposit(amount_d)==negative_value)
                     cout << "Error, Cannot deposit a negative value !" << endl;
                 amount_d = 0;
                 break;
